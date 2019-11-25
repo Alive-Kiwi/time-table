@@ -1,7 +1,7 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 
-import axios from "axios";
-import moment from "moment";
+import axios from 'axios';
+import moment from 'moment';
 
 class TimeTableForm extends Component {
   state = {
@@ -13,10 +13,10 @@ class TimeTableForm extends Component {
     room: null,
     batch: null,
     subject: null,
-    start: "00:00:00",
-    end: "00:00:00",
+    start: '00:00',
+    end: '00:00',
     classDetailType: null,
-    day: "",
+    day: '',
     message: null
   };
 
@@ -33,28 +33,28 @@ class TimeTableForm extends Component {
       batch: this.state.batch,
       room: this.state.room,
       subject: this.state.subject,
-      start: new moment(this.state.start, "HH:mm:ss").local(),
-      end: new moment(this.state.end, "HH:mm:ss").local(),
+      start: new moment.utc(this.state.start, 'HH:mm a'),
+      end: new moment.utc(this.state.end, 'HH:mm a'),
       classDetailType: this.state.classDetailType,
       day: this.state.day
     };
 
-    console.log("class detail", classDetail);
+    console.log('class detail', classDetail);
 
     axios
-      .post("http://localhost:5000/classdetail", classDetail)
+      .post('/api/classDetail', classDetail)
       .then(res => {
         this.setState({
           message: res.data.message
         });
-        console.log("res", res);
+        console.log('res', res);
       })
-      .catch(err => console.log("err", err));
+      .catch(err => console.log('err', err));
   };
 
   componentDidMount() {
     axios
-      .get("http://localhost:5000/all")
+      .get('/api/fetchDetails/all')
       .then(res => {
         console.log(res.data.teachers);
         this.setState({
@@ -64,7 +64,7 @@ class TimeTableForm extends Component {
           batches: res.data.batches
         });
       })
-      .catch(err => console.log("err", err));
+      .catch(err => console.log('err', err));
   }
 
   render() {
