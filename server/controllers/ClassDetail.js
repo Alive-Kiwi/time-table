@@ -16,8 +16,7 @@ router.get('/', (req, res) => {
 });
 
 router.post('/', classExists, (req, res) => {
-  let { teacher, from, to, day, subject } = req.body;
-
+  console.log('main');
   req.body.start = momemt.utc(req.body.start).format('HH:mm A');
   req.body.end = momemt.utc(req.body.end).format('HH:mm: A');
 

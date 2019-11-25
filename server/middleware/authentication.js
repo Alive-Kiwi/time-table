@@ -1,8 +1,11 @@
 const ClassDetail = require('../models/ClassDetail');
 const mongoose = require('mongoose');
 const moment = require('moment');
-// mongoose.Collection.f;
 const classExists = function(req, res, next) {
+  // if (true) {
+  //   next();
+  // }
+  console.log(req.body);
   const allowCreation = req.body.allowCreation;
   ClassDetail.find(allowCreation).then(ClassSchedules => {
     ClassSchedules.map(ClassSchedule => {
@@ -20,6 +23,7 @@ const classExists = function(req, res, next) {
           toBeAasignedTimeStart.isSameOrAfter(aasignedTimeStart) &&
           toBeAasignedTimeEnd.isSameOrBefore(aasignedTimeEnd)
         ) {
+          req.body.allowCreation = false;
           res.send({ message: 'Teacher is already assigned for given time' });
         } else {
           next();
